@@ -3,17 +3,20 @@ import { FormGroup } from "reactstrap";
 import CustomInput from "../../components/common/CustomInput";
 
 const Step3 = (props) => {
-  const { account, setAccount } = props;
+  const { account, setAccount, errors, setErrors } = props;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setAccount(
-      Array.isArray(e)
-        ? { ...account, [name]: e.map((x) => x.value) }
-        : { ...account, [name]: value }
-    );
+    if (name === "confirm") {
+      setAccount({ ...account, [name]: e.target.checked });
+    }
+
+    setAccount({ ...account, [name]: value });
   };
 
+  const validationHandler = (name, errorMessage) => {
+    setErrors({ ...errors, [name]: errorMessage });
+  };
   return (
     <div>
       <FormGroup>
@@ -24,16 +27,9 @@ const Step3 = (props) => {
           name="email"
           placeholder="Email"
           handleChange={handleChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <CustomInput
-          type="text"
-          label="UserName"
-          id="userName"
-          name="userName"
-          placeholder="UserName"
-          handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.email}
         />
       </FormGroup>
       <FormGroup>
@@ -44,6 +40,9 @@ const Step3 = (props) => {
           name="password"
           placeholder="Password"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.password}
         />
       </FormGroup>
       <FormGroup>
@@ -54,6 +53,9 @@ const Step3 = (props) => {
           name="confirmPassword"
           placeholder="confirmPassword"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.confirmPassword}
         />
       </FormGroup>
       <FormGroup>
@@ -62,8 +64,11 @@ const Step3 = (props) => {
           label="Accept terms & conditions"
           id="confirm"
           name="confirm"
-          placeholder="confirmPassword"
+          placeholder="termsAndConditions"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.confirm}
         />
       </FormGroup>
     </div>

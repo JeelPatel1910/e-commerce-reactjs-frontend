@@ -3,7 +3,7 @@ import { FormGroup, Row, Col } from "reactstrap";
 import CustomInput from "../../components/common/CustomInput";
 
 const Step2 = (props) => {
-  const { details, setDetails } = props;
+  const { details, setDetails, errors, setErrors } = props;
 
   const handleChange = (e) => {
     let values;
@@ -23,6 +23,9 @@ const Step2 = (props) => {
     console.log(details);
   };
 
+  const validationHandler = (name, errorMessage) => {
+    setErrors({ ...errors, [name]: errorMessage });
+  };
   return (
     <div>
       <FormGroup>
@@ -33,6 +36,9 @@ const Step2 = (props) => {
           name="address"
           placeholder="Address"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.address}
         />
       </FormGroup>
 

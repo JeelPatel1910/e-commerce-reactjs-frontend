@@ -1,12 +1,12 @@
-import React from "react";
-import { FormGroup } from "reactstrap";
+import React, { useState } from "react";
+import { FormGroup, FormText } from "reactstrap";
 import CustomInput from "../../components/common/CustomInput";
 
 const Step1 = (props) => {
-  const { profile, setProfile } = props;
+  const { profile, setProfile, errors, setErrors } = props;
 
   const handleChange = (e) => {
-    //console.log(e.target.value);
+    console.log(e.target.value);
     const { name, value } = e.target;
     setProfile({
       ...profile,
@@ -15,16 +15,24 @@ const Step1 = (props) => {
     console.log(profile);
   };
 
+  const validationHandler = (name, errorMessage) => {
+    setErrors({ ...errors, [name]: errorMessage });
+  };
+
+  console.log(errors);
   return (
     <div>
       <FormGroup floating>
         <CustomInput
           type="text"
           label="First Name"
-          id="firstname"
-          name="firstname"
-          placeholder="Firstname"
+          id="firstName"
+          name="firstName"
+          placeholder="FirstName"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.firstName}
         />
       </FormGroup>
 
@@ -32,12 +40,16 @@ const Step1 = (props) => {
         <CustomInput
           type="text"
           label="Last Name"
-          id="lastname"
-          name="lastname"
-          placeholder="Lastname"
+          id="lastName"
+          name="lastName"
+          placeholder="LastName"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.lastName}
         />
       </FormGroup>
+      {errors.lastname && <FormText>Required</FormText>}
 
       <FormGroup>
         <CustomInput
@@ -47,6 +59,9 @@ const Step1 = (props) => {
           name="age"
           placeholder="age"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.age}
         />
       </FormGroup>
 
@@ -67,7 +82,7 @@ const Step1 = (props) => {
           type="radio"
           name="gender"
           id="gender"
-          value="Male"
+          value="male"
           label="Male"
           handleChange={handleChange}
         />
