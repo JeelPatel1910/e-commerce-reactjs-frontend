@@ -6,20 +6,17 @@ const Step1 = (props) => {
   const { profile, setProfile, errors, setErrors } = props;
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     setProfile({
       ...profile,
       [name]: value,
     });
-    console.log(profile);
   };
 
   const validationHandler = (name, errorMessage) => {
     setErrors({ ...errors, [name]: errorMessage });
   };
 
-  console.log(errors);
   return (
     <div>
       <FormGroup floating>
@@ -33,6 +30,8 @@ const Step1 = (props) => {
           isRequired={true}
           validationHandler={validationHandler}
           error={errors.firstName}
+          min={3}
+          max={10}
         />
       </FormGroup>
 
@@ -47,6 +46,8 @@ const Step1 = (props) => {
           isRequired={true}
           validationHandler={validationHandler}
           error={errors.lastName}
+          min={3}
+          max={10}
         />
       </FormGroup>
       {errors.lastname && <FormText>Required</FormText>}
@@ -62,6 +63,7 @@ const Step1 = (props) => {
           isRequired={true}
           validationHandler={validationHandler}
           error={errors.age}
+          max={100}
         />
       </FormGroup>
 
@@ -73,6 +75,10 @@ const Step1 = (props) => {
           name="number"
           placeholder="Number"
           handleChange={handleChange}
+          isRequired={true}
+          validationHandler={validationHandler}
+          error={errors.number}
+          max={10}
         />
       </FormGroup>
 

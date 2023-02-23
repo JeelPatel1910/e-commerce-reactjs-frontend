@@ -10,7 +10,7 @@ const Step2 = (props) => {
     if (Array.isArray(e.target.selectedOptions)) {
       values = [...e.target.selectedOptions].map((o) => o.value);
     }
-    console.log(values);
+
     const { name, value } = e.target;
     setDetails(
       Array.isArray(values)
@@ -20,7 +20,6 @@ const Step2 = (props) => {
           }
         : { ...details, [name]: value }
     );
-    console.log(details);
   };
 
   const validationHandler = (name, errorMessage) => {
@@ -39,6 +38,8 @@ const Step2 = (props) => {
           isRequired={true}
           validationHandler={validationHandler}
           error={errors.address}
+          min={5}
+          max={50}
         />
       </FormGroup>
 

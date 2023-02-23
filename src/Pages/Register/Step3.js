@@ -56,6 +56,7 @@ const Step3 = (props) => {
           isRequired={true}
           validationHandler={validationHandler}
           error={errors.confirmPassword}
+          account={account}
         />
       </FormGroup>
       <FormGroup>

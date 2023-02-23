@@ -1,6 +1,10 @@
 import React from "react";
 import { Label, Input } from "reactstrap";
-import { getSentenceFromCamelCase } from "../Helpers/helpers";
+import {
+  emailValidation,
+  getSentenceFromCamelCase,
+  passwordValidation,
+} from "../Helpers/helpers";
 
 const CustomInput = ({
   value,
@@ -15,12 +19,44 @@ const CustomInput = ({
   error,
   isRequired,
   validationHandler,
+  min,
+  max,
+  account,
 }) => {
   const handleOnBlur = (e) => {
+    console.log(e.target.name);
     let errorMessage = "";
-    const { value } = e.target;
+    const { name, value } = e.target;
     if (!value && isRequired) {
       errorMessage = `Please enter ${getSentenceFromCamelCase(name)}`;
+    } else if (
+      (name === "firstName" || name === "lastName" || name === "address") &&
+      value.length < min
+    ) {
+      errorMessage = `${getSentenceFromCamelCase(
+        name
+      )} should be atleast ${min} character`;
+    } else if (
+      (name === "firstName" || name === "lastName" || name === "address") &&
+      value.length > max
+    ) {
+      errorMessage = `${getSentenceFromCamelCase(
+        name
+      )} should not be more than ${max} character`;
+    } else if (name === "number" && value.length > max) {
+      errorMessage = `${getSentenceFromCamelCase(
+        name
+      )} should not be more than ${max}`;
+    } else if (name === "email" && !emailValidation(value)) {
+      errorMessage = `${getSentenceFromCamelCase(name)} is not valid`;
+    } else if (name === "password" && !passwordValidation(value)) {
+      errorMessage = `${getSentenceFromCamelCase(
+        name
+      )} should be  [6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter]`;
+    } else if (name === "confirmPassword" && account.password === "") {
+      errorMessage = "you need to enter password first";
+    } else if (name === "confirmPassword" && !account.password.match(value)) {
+      errorMessage = "It should match the password";
     }
     validationHandler(name, errorMessage);
   };

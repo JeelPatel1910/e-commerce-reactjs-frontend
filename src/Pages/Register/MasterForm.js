@@ -5,7 +5,10 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { v4 as uuid } from "uuid";
-import { checkValidation } from "../../components/Helpers/helpers";
+import {
+  checkValidation,
+  confirmPasswordValidation,
+} from "../../components/Helpers/helpers";
 
 const initialProfile = {
   firstName: "",
@@ -91,8 +94,15 @@ const MasterForm = () => {
       confirmPassword,
       confirm,
     });
+    const confirmPasswordvalidate = confirmPasswordValidation(
+      password,
+      confirmPassword
+    );
     if (Object.keys(validationAccountError).length !== 0) {
       setErrors(validationAccountError);
+      return;
+    } else if (Object.keys(confirmPasswordvalidate).length !== 0) {
+      setErrors(confirmPasswordvalidate);
       return;
     } else {
       setFormData({

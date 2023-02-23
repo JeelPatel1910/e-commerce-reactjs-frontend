@@ -31,3 +31,35 @@ export const checkValidation = (errors, data) => {
 
   return finalErrors;
 };
+
+export const emailValidation = (email) => {
+  let validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (email.match(validRegex)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const passwordValidation = (password) => {
+  let validRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+  if (password.match(validRegex)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const confirmPasswordValidation = (password, confirmPassword) => {
+  const finalErrors = {};
+  if (password !== undefined && confirmPassword !== undefined) {
+    if (password.match(confirmPassword)) {
+      return finalErrors;
+    } else {
+      finalErrors.confirmPassword =
+        "confirm password doesn't match with password";
+      return finalErrors;
+    }
+  }
+};
