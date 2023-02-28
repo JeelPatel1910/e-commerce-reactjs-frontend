@@ -24,7 +24,6 @@ const CustomInput = ({
   account,
 }) => {
   const handleOnBlur = (e) => {
-    console.log(e.target.name);
     let errorMessage = "";
     const { name, value } = e.target;
     if (!value && isRequired) {

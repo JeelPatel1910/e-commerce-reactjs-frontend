@@ -8,9 +8,10 @@ const Step3 = (props) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "confirm") {
+      console.log(e.target.checked);
       setAccount({ ...account, [name]: e.target.checked });
     }
-
+    console.log(account);
     setAccount({ ...account, [name]: value });
   };
 

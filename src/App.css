@@ -1,4 +1,4 @@
-.button{
+.button {
   border-radius: 10px;
   padding: 10px 25px;
   color: white;
@@ -10,32 +10,32 @@
 a:hover {
   text-decoration: none;
 }
-.header{
+.header {
   margin-bottom: 3%;
 }
-.primary{
+.primary {
   background-color: #2a4a4a;
 }
-.secondary{
-  background-color: #e6f196;
+.secondary {
+  background-color: #c7bc41;
   color: black;
 }
-.box{
+.box {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.container{
+.container {
   width: 80%;
   margin: auto;
   height: 100%;
 }
-.form-container{
+.form-container {
   width: 60%;
   background-color: #fdf4e8;
   border-radius: 5%;
-  padding:  5%;
+  padding: 5%;
 }
 .form {
   margin: 20% 0 5% 0;

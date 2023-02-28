@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "reactstrap";
 import MultiStepProgressBar from "./MultiStepProgressBar";
 import Step1 from "./Step1";
@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import {
   checkValidation,
   confirmPasswordValidation,
+  confirmTermsAndConditions,
 } from "../../components/Helpers/helpers";
 
 const initialProfile = {
@@ -19,16 +20,32 @@ const initialProfile = {
   profileImage: "",
 };
 
+const initialDetail = {
+  address: "",
+  profession: "",
+  hobbies: [],
+  birthdate: "",
+  birthTime: "",
+  favoriteColor: "",
+};
+
+const initialAccount = {
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const MasterForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [users, setUsers] = useState([]);
   const [formData, setFormData] = useState({
     profile: {},
     details: {},
     account: {},
   });
   const [profile, setProfile] = useState(initialProfile);
-  const [details, setDetails] = useState({});
-  const [account, setAccount] = useState({});
+  const [details, setDetails] = useState(initialDetail);
+  const [account, setAccount] = useState(initialAccount);
   const [errors, setErrors] = useState({});
 
   const unique_id = uuid();
@@ -36,6 +53,7 @@ const MasterForm = () => {
 
   const handleChange = (e) => {};
 
+  //next button function
   const handleNext = (e) => {
     e.preventDefault();
     switch (currentStep) {
@@ -50,7 +68,6 @@ const MasterForm = () => {
           setErrors(validationProfileError);
           return;
         } else {
-          console.log(profile);
           setFormData({
             ...formData,
             profile,
@@ -72,21 +89,22 @@ const MasterForm = () => {
           });
           console.log(details);
         }
-
         break;
       default:
         return;
     }
-    console.log(formData);
     setCurrentStep((prev) => (prev >= 2 ? 3 : prev + 1));
   };
 
+  //previous button function
   const handlePrev = (e) => {
     e.preventDefault();
     setCurrentStep((prev) => (prev <= 1 ? 1 : prev - 1));
   };
 
+  //submit data function
   const addData = (e) => {
+    e.preventDefault();
     const { email, password, confirmPassword, confirm } = account;
     const validationAccountError = checkValidation(errors, {
       email,
@@ -98,22 +116,30 @@ const MasterForm = () => {
       password,
       confirmPassword
     );
+    console.log(validationAccountError);
+
     if (Object.keys(validationAccountError).length !== 0) {
       setErrors(validationAccountError);
+      console.log(errors);
       return;
     } else if (Object.keys(confirmPasswordvalidate).length !== 0) {
       setErrors(confirmPasswordvalidate);
       return;
     } else {
-      setFormData({
+      console.log("3rd");
+      setFormData((formData) => ({
         ...formData,
         account,
-      });
+        id: small_id,
+      }));
     }
     console.log(formData);
-    localStorage.setItem(small_id, JSON.stringify(formData));
+    const data = JSON.parse(JSON.stringify(formData));
+    setUsers((prev) => [...prev, data]);
+    localStorage.setItem("Users", JSON.stringify(users));
     setCurrentStep(1);
   };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
